@@ -1,0 +1,9 @@
+\section{Experiments on Real-world Data} \label{sec:experiments}
+
+\subsection{Dataset Description}
+
+We evaluate the proposed techniques on the widely-used Foursquare check-in dataset~\cite{yang2015nationtelescope}. In our experiments, we mine the check-in data from two of the most popular cities, including New York City (NYC) and Tokyo. The dataset contains about 227,428 check-ins reported in NYC and 573,703 in Tokyo. The check-ins were collected for about 10 month. From each check-in, we extract the user ID, location ID, and a timestamp. Using the user ID or location ID, we retrieve the profile of that user or location on Foursquare. The user profile include the social connection between users (``follower - followee") and the location profile includes its category (\textit{Food, Coffee, Nightlife, Fun, and Shopping}), coordinates, and user rating. The check-ins are grouped by user ID/location ID and sorted by their timestamps.
+
+
+\subsection{Experiment Design and Results}
+

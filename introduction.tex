@@ -1,0 +1,26 @@
+\section{Introduction}\label{sec:intro}
+
+In the past decade, with the rise of Location-Based Social Networks (LBSN), huge amount of geo-spatial data is produced on a daily basis. It becomes possible to mine spatio-temporal data at unprecedented large scale. For example, the Foursquare\cite{yang2015nationtelescope} dataset contains more than 30 millions of self-reported check-ins from thousands of user around the world. 
+
+It is long known that a user's mobility pattern can be affected by his social connections~\cite{cho2011friendship, ye2013s}. For example, a group of close friends tend to check-in to the same locations at the same time period. As such, a user's future movement can be predicted with the historical trajectory of his friends on LBSN. 
+
+In this paper, we propose to investigate the inverses problem: How does a user's mobility pattern affects his social connections. Towards this goal, we are interested in studying the predictive power of spatio-temporal data in predicting a user's social connections. In particular, given the trajectories of two LBSN users $u$ and $v$, we aim to predict the probability that $u$ and $v$ are friends on the LBSN.
+
+Making prediction with spatio-temporal data is intensively studied, but mostly for prediction of future movements (e.g., \cite{cho2011friendship, noulas2012mining, gao2012mobile, scellato2011nextplace, lian2013collaborative}). To our knowledge, however, making prediction on the user's social connects remains an open issue. We aim to complement existing research in this field by addressing the problem. Predicting social connections with spatio-temporal data also provides a supplement method for \textit{friend recommendation} on LBSN. It can be used to discover users that potentially share the same interests for locations such as restaurants, shops, and museums.
+
+A straightforward way to solve the problem is to compute the spatio-temporal overlap of two trajectories. The assumption is, if two users frequently visits the same location during the same time peroid on their trajectories, they might be friend with each other and were meeting at those locations. Algorithms such as co-location mining~\cite{weiler2015geo} can be used to detect such spatio-temporal overlap among users. However, this naive solution suffers from two problems. First, it treats all locations equally in predicting social connections, which is not realistic. For example, if two users frequently meet at someone's house or a small coffee shop, it is very likely that they know each other. However, if they both check-in to the same Walmart supermarket after work, it might be just an coincidence simply because there is not other nearby supermarket. Second, this method ignores the time difference of check-ins behaviours. If two users both check-in to a restaurant at 6:00pm, it is not as significant as two users visit the same location at 10:00pm. This is because most customer of the restaurant may choose to dine there around 6:00pm, but if two users both decide to visit there at 10:00pm, it is more likely that they plan to meet with each other.
+
+We propose a spatio-temporal social connection prediction framework that aims at address the above problems. Unlike the naive solution, we assume different locations and different time slots have different predictive power, which is modelled as a latent variable. As such, we first formulate the social connection prediction problem as a latent variable estimation problem, and then design a matrix factorization-based algorithm to estimate the variables and make predictions. We summarize our contributions as follows:
+\begin{itemize}
+
+\item We introduce the spatio-temporal social connection prediction problem. Given the trajectories of two LBSN users $u$ and $v$, we aim to predict the probability that $u$ and $v$ are friends on the LBSN.
+
+\item We formulate the social connection prediction problem as a latent variable estimation problem, and then design a matrix factorization-based algorithm address the problem.
+
+\item The proposed framework is implemented and evaluated on the Foursquare dataset. The result shows the proposed method significantly outperforms the naive trajectory overlap based solution in prediction accuracy. 
+
+\end{itemize} 
+
+The rest of the paper...
+
+  

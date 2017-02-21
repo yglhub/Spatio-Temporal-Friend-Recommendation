@@ -1,0 +1,173 @@
+\documentclass[sigconf]{acmart}
+
+% Old ACM template no longer used since 2017
+%\documentclass{sig-alternate}
+
+\usepackage{multirow}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%\usepackage{algorithm2e}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{color, url}
+%\usepackage[justification=centering]{caption}
+\usepackage[skip=0pt]{caption}
+\usepackage[skip=0pt]{subcaption}
+\usepackage{tabto}
+\usepackage{url}
+\usepackage{xcolor, colortbl}
+\usepackage{booktabs}
+\usepackage{enumitem}
+%\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{amssymb}
+\usepackage{url}
+
+
+
+\graphicspath{ {figs/} }
+
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{corollary}[theorem]{Corollary}
+
+%\newtheorem{fact}{Fact}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\newcommand{\myparatight}[1]{\smallskip\noindent{\bf {#1}:}~}
+%\newcommand{\comment}[1]{{\small\color{red}[COMMENT: #1]}}
+
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\newcommand{\todo}[1]{{\textcolor{red}{{\bf TODO:} #1}}}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+
+\newcommand{\DB}{\ensuremath{\mathcal{ST}}}
+\newcommand{\RR}{\ensuremath{\mathbb{R}}}
+\newcommand{\NN}{\ensuremath{\mathbb{N}}}
+\newcommand{\clust}{\ensuremath{\#\mbox{Clust}}}
+
+\newcommand{\TODO}[1]{{\bf \textcolor[rgb]{1.00,0.00,0.00}{TODO: #1}}}
+
+
+% ACM info -----------------------------------------------------------------
+
+\iffalse
+% Copyright
+%\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+% DOI
+\acmDOI{10.475/123_4}
+
+% ISBN
+\acmISBN{123-4567-24-567/08/09}
+
+
+%Conference
+\acmConference[KDD'17]{ACM SIGKDD Conference on Knowledge Discovery and Data Mining}{August 2017}{Halifax, Nova Scotia Canada}
+\acmYear{2017}
+\copyrightyear{2017}
+
+\acmPrice{15.00}
+\fi
+
+% -----------------------------------------------------------------
+
+
+\begin{document}
+
+
+%save space
+%\setlength{\abovedisplayskip}{1.5mm}
+%\setlength{\belowdisplayskip}{1.5mm}
+
+
+
+\title{Spatio-Temporal Prediction of Social Connections}
+
+
+\author{Guolei Yang}
+\affiliation{%
+  \institution{Iowa State University}
+  \city{Ames} 
+  \state{Iowa, USA} 
+  \postcode{50011}
+}
+\email{yanggl@iastate.edu}
+
+\author{Andreas Z\"ufle}
+\affiliation{%
+  \institution{George Mason University}
+  \city{Fairfax} 
+  \state{Virginia, USA} 
+  \postcode{ 22030}
+}
+\email{azufle@gmu.edu}
+
+
+\begin{abstract}
+TBD
+\end{abstract}
+
+
+\iffalse
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10002951.10003227.10003236.10003101</concept_id>
+<concept_desc>Information systems~Location based services</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003227.10003351</concept_id>
+<concept_desc>Information systems~Data mining</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010147.10010257</concept_id>
+<concept_desc>Computing methodologies~Machine learning</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Location based services}
+\ccsdesc[500]{Information systems~Data mining}
+\ccsdesc[300]{Computing methodologies~Machine learning}
+
+
+\keywords{}
+
+\fi
+
+\maketitle
+
+
+\input{introduction}
+\input{related}
+\input{problem}
+\input{feature}
+%\input{model}
+\input{experiments}
+\input{conclusion}
+
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{ref}
+
+%\balance
+\end{document} 

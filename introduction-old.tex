@@ -1,0 +1,70 @@
+\section{Introduction} \label{intro}
+\iffalse
+We live in a society that is competitive in nature. Daily we face the challenge of finding improvement strategies to make something more competitive.  For example, a manufacturer needs to decide how to improve its product, say camera, for more customers. Here an improvement may be changing the camera's features such as resolution, weight, price, and so on. Different improvements have different costs. Likewise, in a presidential election, the candidates need to evaluate their campaign strategies from time to time, and adjust if needed, in order to appeal themselves to more voters. 
+
+In this paper, we formulate the problem of finding improvement strategies by modeling it as a problem of database query processing. Specifically, we consider a set of objects (e.g., cameras, presidential candidates) and a set of top-k queries, each presenting a user's preference on the objects. Each object has a number of attribute values and a top-k query, which represents a user's preference, applies a \textit{utility function} which computes a ``score" for each object, and retrieves the $k$ objects with the highest or lowest scores. We are interested in or 
+
+\fi
+
+Top-k queries~\cite{chaudhuri1999evaluating, chang2000onion, hristidis2001prefer, zou2008dominant} is widely used in applications like e-commerce for users to find objects (e.g., cameras, restaurants) that best match their preference. Here a user's preference is represented by a \textit{utility function} which computes a ``score" for each object, and a top-k query retrieves the $k$ objects with the highest or lowest scores. When an object is included in a query result, we say the object {\em hit} the query. In this paper, we consider a set of objects and a set of top-k queries, and we are interested in adjusting an object's attribute value, under some cost constraint, so that it can hit as many queries as possible. We will refer to such an adjustment as an {\em improvement strategy}.
+
+The problem of finding an improvement strategy arises from a variety of applications. A camera manufacturer may want to improve its product for more market shares. Here an improvement is a change of the product's features such as camera's resolution, weight, and price. Likewise, in a presidential election, it is imperative for the candidates to evaluate their campaign strategies from time to time, and adjust if needed, in order to appeal themselves to more voters. In these examples, there are a set of objects (e.g., products, presidential candidates) and a set of top-k queries, each representing the preference of a user (e.g., customer, voter), and we want to improve one or more objects (called {\em targets}) to hit as many queries as possible. Existing queries such as reverse top-k query~\cite{vlachou2011monochromatic}, maximal rank query~\cite{mouratidis2015maximum}, and reverse k-ranks query~\cite{zhang2014reverse} have been developed to provide information concerning an object's competitiveness in top-k selection. These queries, however, do not allow one to identify an improvement strategy, the focus of this paper.
+
+\iffalse
+The little attention received by this problem is disproportionate to its prevalence. Whenever top-k queries are used to find objects that match users' preference, the problem of object improvement is naturally of interests. For example, a product seller naturally wants its products to be in as many users' query result as possible. In an election, a candidate's goal is to maximize the number of voters who prefers him over the other candidates. In all these examples, an object (e.g., a product, a candidate) has several attributes, and each of them can be adjusted to certain degree (e.g., price of a product, policies of a candidate). A set of top-k query is used to model users' preference, and the goal of the product owner is to attract as many users as possible. It is imperative to know how to make their product more competitive, but such information is not provided by any existing queries.
+\fi
+
+%Objects hit a user's top-k query are believed to be of the user's interests. In this paper, we consider the problem of how to efficiently \textit{improve} objects in order to attract more users.
+%However, a recent study~\cite{zhang2014reverse} shows that it is easy to match a small number of competitive products to many users, but the vast majority ($>90\%$) of products may find themselves not in any user's query result. This phenomenon where a small proportion of objects attracts most users is widely observed in many occasions~\cite{faloutsos1999power, clauset2009power}. For sellers of the majority niche objects, it is imperative to know how to make their product more competitive, but such information is not provided by existing queries.
+
+\iffalse
+\begin{figure}[htb]
+        \centering
+        \begin{subfigure}{0.5\textwidth}
+        \centering
+                \includegraphics[scale=0.35]{analysisUI}
+                \caption{Improvement evaluation for a student}
+        \end{subfigure}%
+        
+      	%add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}{0.5\textwidth}
+        \centering
+               \includegraphics[scale=0.4]{optimalUI}
+               \caption{Finding optimal improvement strategy for a student}
+        \end{subfigure}
+        
+         \caption{Example of Improvement Evaluation Query and Optimal Strategy Query results} \label{example}
+\end{figure}
+\fi
+%IQ supplies top-k query with the key information needed to effectively improve objects. 
+
+\iffalse
+We propose a new query type, termed \textit{Improvement Query (IQ)}, which queries improvement strategies for target objects. We explain IQ with a motivation example. In product marketing, there is a set of customers and some competing products. A products have several attributes such as prices and features. Each customer defines a function to expresses its preference and would purchase the top-k ranked product. The product owner is eager to improve its products' competitiveness in order to attract more customers and gain more profit. There are several means to do so, e.g., lower the price, enhancing certain features. Each of these means requires certain resources such as money and time, and they may not be equally effective. We design two types of IQs to help the product owner in making improve strategies.
+\fi
+
+In this paper, we propose a new query type, called \textit{Improvement Query (IQ)}, which queries the improvement strategies for target objects. We consider two variations: 
+
+\myparatight{Min-Cost IQ} Given a \textit{cost function}, this type of IQ finds the most cost-efficient improvement strategy for an object to hit a given minimum number of top-k queries. Here, a cost function is defined by the query issuer to measure the cost of adjusting attribute values of objects. The idea of modeling costs as math functions is a common approach~\cite{viner1932cost, binger1998microeconomics}. We allow query issuers to define their own cost functions. For example, different manufacturers may have different costs in improving their products. 
+
+%For example, figure~\ref{example}-(a) shows a simple linear cost function which computes the total cost of adjusting attributes of the student. 
+\myparatight{Max-Hit IQ} Given a \textit{cost function} and a \textit{budget}, this type of IQ returns the improvement strategy for an object to hit the maximal number of top-k queries under the condition that the total cost does not exceed the budget. 
+
+%Figure~\ref{example}-(b) shows how to specify such an IQ with the college admission example.
+
+
+%\myparatight{Improvement Evaluation Query}(Figure~\ref{example}-(a)) Given an improvement strategy for some object(s), the query evaluates the improvement results in terms of the number of top-k queries hit by the improved object(s). The purpose of this query is to provide users with an immediate feedback when they attempts to adjust certain attribute values of an object. As illustrated in the figure, we also provide the query issuer with an attribute value-hit queries graphs which gives a straightforward illustration of how the number of hit query are affected by adjusting each attribute of the object.
+
+%To approach the problem, we first solve the challenge of how to efficiently evaluate the outcome of given improvement strategies. A straightforward way is to re-evaluate all the top-k queries every time an object is adjusted. This is too computational expensive. Alternatively, algorithms such as Reverse top-k Threshold Algorithm (RTA)~\cite{vlachou2011monochromatic} can compute if an object is in the result of a set of top-k queries. It requires linear utility functions and more importantly, it is most efficient when the object does not appear in any query result, which contradicts the purpose of improvement strategies. Such limitations make it unsuitable for our problem. 
+
+Processing the above two IQs is challenging. Our research shows that the problem can be formulated as constrained optimization problems and proves it is NP-hard. As such, finding accurate query results is computation intensive even for moderate size datasets. In this paper, we address this problem by proposing a suite of heuristic algorithms. At the core of the proposed algorithms is a novel indexing technique. Our key idea is to 1) \textit{interpret each object as a function}, and 2) {\textit treat each top-k query as an input to these functions}. The \textit{intersection} of two functions formulates a hyperplane in their domain. Given a set of functions, their intersection hyperplanes partition the domain into a number of \textit{subdomains}. We observe that the rank of an object must be the same for all queries that fall in the same subdomain. Applying improvement strategies to an object will cause the boundary of some subdomains to change. And an improvement strategy will affect the result of a top-k query only if the query falls into a different subdomain before and after the strategy is applied. This observation allows us to develop a highly efficient algorithm for IQ processing. We summarize our main contributions as follows:
+
+\begin{itemize}
+\item To our knowledge, this is the first formal study of the object improvement problem. We define an improvement as adjusting the attribute values of the targets to make them hit as many top-k queries as possible. We also prove the inherent intractability of the minimal cost/maximal hit improvement strategy searching problem. Finding ``good" improvement strategies is of critical importance in applications where top-k query is used to model users' preference, such as product marketing and election.
+
+\item We propose the notion of \textit{Improvement Query (IQ)}, which supplements existing the top-k query with the key information needed to develop effective improvement strategies. We propose two types of IQs: Given a user-defined cost function, the Min-Cost IQ finds the most cost-efficient improvement strategy that achieves desired number of hits, while the Max-Hit IQ finds the improvement strategy that hits the maximal number of top-k queries with a given budget. We design efficient IQ processing algorithms based on a novel query indexing technique and an important observation.
+
+\item We implement the proposed techniques as an analytic tool and integrate it with the Database Management System (DBMS). The tool is thoroughly evaluated over synthetic and real-world data. The results show that our techniques demonstrate good performance, and the tool is scalable for large-scale users and objects. More importantly, comparing with existing techniques, our technique is unique in being capable of finding the best improvement strategy under given cost constraints.
+\end{itemize}
+
+The rest of the paper is organized as follows. We discuss closely related work in Section 2. In Section 3, we formulate the problem of querying improvement strategies and give an overview of our solution. The proposed techniques for basic cases and complex scenarios are presented in Section 4 and Section 5, respectively. In Section 6, we describe our system implementation and present our performance evaluation results. Finally, we conclude the paper in Section 7.

@@ -1,0 +1,93 @@
+%
+% The name of this file is ``macros.tex''
+%
+
+%
+% TEX defaults
+%
+%
+% frame 6.5 * 9
+\textwidth 6.5in
+\textheight 9in
+
+% left/right margins
+\oddsidemargin 0pt
+\evensidemargin 0pt
+\marginparwidth 1in
+\marginparsep 0pt
+
+% top margin
+\topmargin -25pt
+\headheight 10pt
+\headsep 30pt
+% \topskip 0pt
+
+% foot margin
+%\footheight 0pt
+\footskip 27pt
+
+
+% macros for commonly used special fonts
+\newcommand{\IE}{{\it i.e.,}\ }
+\newcommand{\EG}{{\it e.g.,}\ }
+% single/double spacing
+%\newcommand{\SS}{\renewcommand{\baselinestretch}{1}\large\normalsize}
+\newcommand{\DS}{\renewcommand{\baselinestretch}{1.6}\large\normalsize}
+% reduce the space between lines
+\newcommand{\Tight}{\renewcommand{\baselinestretch}{0.9}\large\normalsize}
+\newcommand{\HalfTight}{\renewcommand{\baselinestretch}{0.95}\large\normalsize}
+\newcommand{\MinorTight}{\renewcommand{\baselinestretch}{0.975}\large\normalsize}
+% Page title (primarily for foils)
+% (this was called \HH}
+\newcommand{\PageTitle}[1]{{\newpage \begin{center}{\LARGE {\bf {#1}} } \end{center} } }
+
+% remove spaces around section headers
+%\newcommand{\Section}[1]{\vspace{-3ex}\section{#1}\vspace{-2ex}}
+\newcommand{\Subsection}[1]{\vspace{-2ex}\subsection{#1}\vspace{-1ex}}
+\newcommand{\Subsubsection}[1]{\vspace{-2ex}\subsubsection{#1}\vspace{-1ex}}
+
+% go forward n lines (negative for backward move)
+\newcommand{\VLine}[1]{\vspace{#1ex}}
+% itemize and enumerate without spaces around/between items
+\newenvironment{TightItem}{\vspace{-2ex}\begin{itemize}
+  \setlength{\itemsep}{-0ex}}{\end{itemize}\vspace{-1ex}}
+\newenvironment{TightEnum}{\vspace{-2ex}\begin{enumerate}
+  \setlength{\itemsep}{-0ex}}{\end{enumerate}\vspace{-1ex}}
+\newenvironment{TightDesc}{\vspace{-1ex}\begin{description}
+  \setlength{\itemsep}{-0ex}}{\end{description}\vspace{-1ex}}
+% set the page number (to the first argument)
+\newcommand{\SetPageNo}[1]{\countdef\pageno=0 \pageno=#1}
+% things to do
+\newenvironment{Todo}{\begin{large}\begin{bf}********** things to do
+    ********** \\}{\\ **********\end{bf}\end{large}}
+% for discussion
+\newenvironment{Discuss}{\begin{large}\begin{em}**********
+    things to be discussed ********** \\}{\\ **********\end{em}\end{large}}
+% set the paragraph identation and separation
+
+
+% the foil environment
+\newenvironment{Foil}{\begin{document}\begin{LARGE}\begin{sf}
+    }{\end{sf}\end{LARGE}\end{document}}
+    % NOTE: ``}'' must be in the 2nd line
+% foil page title
+\newcommand{\Title}[1]{\newpage \center{\huge {\sf #1}} \flushleft
+    \vspace{1ex}}
+
+% set the paragraph identation and separation
+\parindent 0.2in
+\setlength{\parskip}{1ex}
+
+% set text width
+\textwidth = 6.75in
+
+% set the formula separation
+\setlength{\topsep}{0in}
+
+% set indentation for formulas:
+% \setlength{\mathindent}{3ex}
+
+% set left margin
+\setlength{\oddsidemargin}{-.1in}
+
+
