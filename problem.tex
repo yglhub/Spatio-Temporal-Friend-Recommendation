@@ -3,5 +3,38 @@
 \subsection{Problem Statement} \label{sec:problem}
 
 
-\subsection{Proposed Framework} \label{sec:framework}
+In this paper, we assume the precise check-ins, instead of geographic coordinates is given, as in the Foursquare dataset. Nevertheless, the proposed method is also applicable to coordinates...
 
+
+We formally define the notion of \textit{Check-in} and \textit{User Trajectory} used in this paper.
+
+
+
+
+We define a \textit{Co-visitation} of two users as follows: 
+
+
+
+We formulate the social connection prediction problem as a classification problem, where the goal is to assign a given pair of users into one of the two classes: \textit{Friends} and \textit{Non-friends}.
+
+
+\subsection{Methodology} \label{sec:framework}
+
+What model to use?? DNN? Linear? 
+Use feature selection to select only significant locations/time slots? AdaBoost?
+Matrix Factorization? for full paper...
+
+Given the trajectories of two users $u_i$ and $u_j$, we propose a three step method...
+
+1. Feature extraction
+2. Model learning
+3. Prediction
+
+
+
+Hypothesis (For a full paper), Research questions
+1. Active user vs Non-active users?
+2. Percentage of friends can be explained? 
+3. Most significant types of locations?
+4. Most significant time slots?
+5. Geo-distance and predictive power?
