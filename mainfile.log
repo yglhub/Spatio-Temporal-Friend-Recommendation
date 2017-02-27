@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.31)  26 FEB 2017 10:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.10.31)  26 FEB 2017 13:24
 entering extended mode
 **mainfile.tex
 
@@ -1256,11 +1256,11 @@ Package rerunfilecheck Info: File `mainfile.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 173.
  ) 
 Here is how much of TeX's memory you used:
- 14525 strings out of 493921
- 226639 string characters out of 3144872
+ 14531 strings out of 493921
+ 226789 string characters out of 3144872
  344596 words of memory out of 3000000
  17135 multiletter control sequences out of 15000+200000
- 73880 words of font info for 245 fonts, out of 3000000 for 9000
+ 74530 words of font info for 249 fonts, out of 3000000 for 9000
  1002 hyphenation exceptions out of 8191
  60i,12n,94p,964b,433s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/libertine/lbtn_c6xmqr.enc}
@@ -1278,7 +1278,7 @@ iles (x86)/MiKTeX 2.9/fonts/type1/public/libertine/LinLibertineTI.pfb><C:/Progr
 am Files (x86)/MiKTeX 2.9/fonts/type1/public/newtx/fxlri-7letters.pfb><C:/Progr
 am Files (x86)/MiKTeX 2.9/fonts/type1/public/newtx/txsys.pfb><C:/Program Files 
 (x86)/MiKTeX 2.9/fonts/type1/public/newtx/zxlri.pfb>
-Output written on mainfile.pdf (2 pages, 461745 bytes).
+Output written on mainfile.pdf (2 pages, 461847 bytes).
 PDF statistics:
  136 PDF objects out of 1000 (max. 8388607)
  25 named destinations out of 1000 (max. 500000)
