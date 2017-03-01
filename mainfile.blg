@@ -1,18 +1,37 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: mainfile.aux
 The style file: ACM-Reference-Format.bst
 Database file #1: ref.bib
+Repeated entry---line 119 of file ref.bib
+ : @inproceedings{xiao2010finding
+ :                               ,
+I'm skipping whatever remains of this entry
+Warning--empty publisher in backstrom2011supervised
+Warning--empty address in backstrom2011supervised
 Warning--empty publisher in cho2011friendship
 Warning--empty address in cho2011friendship
 Warning--empty publisher in gao2012mobile
 Warning--empty address in gao2012mobile
 Warning--empty publisher in lian2013collaborative
 Warning--empty address in lian2013collaborative
+Warning--empty publisher in menon2011link
+Warning--empty address in menon2011link
+Warning--empty publisher in miller2009nonparametric
+Warning--empty address in miller2009nonparametric
 Warning--empty publisher in noulas2012mining
 Warning--empty address in noulas2012mining
+Warning--no journal in pieter2003link
+Warning--no number and no volume in pieter2003link
+Warning--page numbers missing in both pages and numpages fields in pieter2003link
 Warning--empty publisher in scellato2011nextplace
 Warning--empty address in scellato2011nextplace
 Warning--empty publisher in weiler2015geo
 Warning--empty address in weiler2015geo
+Warning--empty publisher in xiao2010finding
+Warning--empty address in xiao2010finding
 Warning--empty publisher in ye2013s
 Warning--empty address in ye2013s
-(There were 14 warnings)
+Warning--empty publisher in yin2010linkrec
+Warning--empty address in yin2010linkrec
+Warning--empty publisher in yu2006stochastic
+Warning--empty address in yu2006stochastic
+(There was 1 error message)

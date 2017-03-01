@@ -2,7 +2,7 @@
 
 \subsection{Problem Statement} \label{sec:problem}
 
-We define a user's trajectory as a series of timestamped check-ins, where each check-in indicates the exact place (i.e., a restaurant, a coffee shop, etc.) the user visits, instead of a geo-graphical coordinate. The Foursquare dataset is an example of such trajectories that consists of self-reported check-ins. Note that coordinate-based trajectory can be converted into such check-ins by joining the coordinates with a database of Point-of-Interests (PoI), such as provided by Open-Stree Map. Therefore, for simplicity, we consider only check-in-based trajectory in this paper. We formally define the notion of \textit{Check-in} and \textit{User Trajectory}.
+We define a user's trajectory as a series of timestamped check-ins, where each check-in indicates the exact place (i.e., a restaurant, a coffee shop, etc.) the user visits, instead of a geo-graphical coordinate. The Foursquare dataset is an example of such trajectory that consists of self-reported check-ins. Note that coordinate-based trajectory can be converted into such check-ins by joining the coordinates with a database of Point-of-Interests (PoI), such as provided by Open-Stree Map. For simplicity, we consider only check-in-based trajectory in this paper. We formally define the notion of \textit{Check-in} and \textit{User Trajectory} as follows.
 
 \begin{definition}[Check-in]
 Let $U$ denote a set of unique user identifiers, $L$ denote a set of locations, and $T$ denote the time domain. A check-in $c$ is a triple $(u, l, t) \in U \times L \times T$, which indicates the user $u$ has visited $l$ at time $t$.
@@ -15,30 +15,31 @@ Let $C$ be a collection of check-ins and $u \in U$ a user, then the set $C_u := 
 The proposed social connection prediction model is based on the concept of \textit{Co-visitation}, which is defined as follows: 
 
 \begin{definition}[Co-visitation]
-Two users $u_i$ and $u_j$ co-visit a location $l$ if $u_i$ and $u_j$ report two check-ins $(u_i, l, t_i)$ and $(u_j, l, t_j)$ respectively, where $| t_i - t_j| \leq \tau$.
+A co-visitation of two users $u_i$ and $u_j$ to a location $l$ is defined as the event that $u_i$ and $u_j$ report two check-ins $(u_i, l, t_i)$ and $(u_j, l, t_j)$ respectively, where $| t_i - t_j| \leq \tau$.
 \end{definition}
 
-Here $\tau$ is an experience-based parameter call the minimal co-visitation time window. We formulate the social connection prediction problem as a classification problem. Given the trajectory and profile of two users $u_i$ and $u_j$, the goal is to assign the pair of users $(u_i, u_j)$ into one of the two classes: \textit{Friends} or \textit{Non-friends}. 
+Here $\tau$ is an experience-based parameter called the co-visitation time window. We formulate the social connection prediction problem as a classification problem. Given the trajectory of two users $u_i$ and $u_j$, the goal is to assign the pair of users $(u_i, u_j)$ into one of the two classes: \textit{Friends} or \textit{Non-friends}. 
 
-\subsection{Methodology} \label{sec:framework}
+\subsection{Methodology} \label{sec:method}
 
-We propose to model the probability of the existence of social connection between two users based on the hypothesis that socially connected users tend to visit same locations at same time periods, and such events are defined as co-visitations.  
+We model the probability of the existence of social connection between two users based on the hypothesis that socially connected users tend to visit same locations at same time periods, which is defined as co-visitations. We propose a three step model learning process.
+\begin{itemize}
+\item \textbf{Co-visitation feature extraction} Given the trajectories of two users $u_i$ and $u_j$, we first convert their trajectories into a high-dimensional co-visitation feature vector that reflects the time and location of their co-visitations.
 
-What model to use?? DNN? Linear? 
-Use feature selection to select only significant locations/time slots? AdaBoost?
-Matrix Factorization? for full paper...
+\item \textbf{Feature selection} A feature selection process is applied on the co-visitation feature vector in order to filter out less significant co-visitations. It helps us to identify the locations and time slots that are most related to user's social connections. 
 
-Given the trajectories of two users $u_i$ and $u_j$, we propose a three step method...
-
-1. Feature extraction
-2. Model learning
-3. Prediction
+\item \textbf{Model learning} A model is then learnt from the selected features. To find the most suitable model for our problem, we explored several modelling techniques including the logistic regression, Support Vector Machine (SVM), and artificial neural network.
+\end{itemize}
 
 
+\iffalse
 
-Hypothesis (For a full paper), Research questions
+Research questions worth exploring in the future
+
 1. Active user vs Non-active users?
-2. Percentage of friends can be explained? 
+2. Percentage of social connections can be explained by trajectories? 
 3. Most significant types of locations?
 4. Most significant time slots?
 5. Geo-distance and predictive power?
+
+\fi
