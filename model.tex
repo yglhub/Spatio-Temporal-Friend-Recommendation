@@ -1,2 +1,38 @@
-\section{Feature Selection and Model Learning} \label{sec:model}
+\section{Proposed Model} \label{sec:model}
 
+\subsection{Spatio-Temporal Co-visitation Matrix}
+
+Given the trajectories of two users $C_{u_a}$ and $C_{u_b}$, their spatio-temporal co-visitation matrix $M(a,b)$ is a $m \times n$ matrix where $m$ is the total number of location in $\mathbb{L}$ and $n$ the number of time slots. The $i$-th row in $M(a,b)$ corresponds to the $i$-th location while the $j$-th column corresponds to the $j$-th time slot. As such, if the two users had $x \in \mathbb{N}$ co-visitation to the $i$-th location that occurred within the $j$-th time slot, $M(a,b)_{i,j}$ is set to $x$ and otherwise 0. Figure~ illustrates a co-visitation matrix generated for two users. Note that the co-visitation graph is usually highly sparse.
+
+The granularity of locations and time slots used to build the co-visitation matrix can be adjusted as needed, i.e., each location can be an exact PoI or a geographic region with arbitrary size. The time slot can be hours or days. The purpose of this mechanism is to provide the users with the flexibility to control the number of model parameters need to be learnt from training data. For larger dataset, more locations and time slots can be used. However, if the number of labelled instance is limited, using a large number of parameters may risk over-fitting the model. Without loss of generality, in this paper, we use the following granularity settings. 1) Each location is a specific PoI (i.e., a restaurant, a coffee shop, etc.), but the total number of PoIs used is limited to 100. 2) We partition each day into 5 time slots:(12:00am to 6:00am), (6:01am to 10:00am), (10:01am to 2:00pm), (2:01pm to 5:00pm), (5:01pm to 8:00pm), and (8:01pm to 11:59pm). Note that these time slot are not evenly partitioned. Instead, we choose this typical time slot that reflects different period of a day for work or social events. As such, we use a total of 35 time slots, because each day of a week has 5 slots.
+
+\subsection{Social Connection Prediction Model}
+
+In our model, both locations and time slots are mapped into a 1-dimensional latent space. We use $U \in \mathbb{R}^m$ and $V \in \mathbb{R}^m$ to denote the latent variables for locations and time slots, where $u_i \in U$ can be seen as a weight that measures the significance of the $i$-th locations. Similarly, $v_j \in V$ measures the significance of the $j$-th time slot. Given the co-visitation matrix $M(a,b)$, we can then estimate that how likely $u_a$ and $u_b$ are socially connected using a weighted sum over the matrix, defined as follows:
+\begin{align}\label{sum}
+s(a,b) = \sum_{i = 1} ^m \sum_{j=1}^n u_i v_j M(a,b)_{i,j}
+\end{align}
+where $s(a,b)$ can be seen as a ``score". The higher the score is, the more likely $u_a$ and $u_b$ are socially connected. We employ the sigmoid function to convert $c(a,b)$ into an estimated probability for the classification problem:
+\begin{align}\label{sigmoid}
+\hat{Pr}( (u_a, u_b)  \text{ is connected} ) = \frac{1}{1 + e^{-c(a,b)}}
+\end{align}
+If the predicted probability is higher than a decision threshold, denoted by $\lambda$, the user pair is classified as \textit{connected}, otherwise \textit{non-connected}.
+
+The above model, however, does not take into consideration the factor of geographic distance between locations. The same location may have different significance for users lives in different area. The geographic distance between a user's home/work and the co-visitation locations can been seen as a personalized parameter to adjust the significance of a location. To this end, we modify Equation~\ref{sum} by adding the \textit{distance coefficients} $W = \{w_1, w_2\}$ to our model:
+\begin{align}\label{sum2}
+s(a,b) = \sum_{i = 1} ^m \sum_{j=1}^n \bigg( u_i v_j + \sqrt{w_1 D(i,a) * w_2 D(i,b)} \bigg) M(a,b)_{i,j} 
+\end{align}
+Here, $w_1$ and $w_2$ are the two distance coefficients, and $D(i,a)$ measures the geographic distance between the $i$-th locations and $u_a$'s home base. For simplicity, we use the geographic center of $u_a$'s all check-ins as the estimated home base coordinate. Nevertheless, more complex method such as the one proposed in~\cite{cho2011friendship} can also be used for more strict estimation. Note that by introducing the distance coefficients we only added two more parameters into our model, but it allows the classification results to be ``personalized" to some extend by involving the two user's home base locations into the model.
+
+
+\subsection{Model Learning}
+
+Parameters in Equation~\ref{sum2} can be learned from a set of labelled training data by optimization the solving the function:
+\begin{align}\label{opt}
+\argmin_{U, V, W} \sum_{ \forall u_a, u_b \in \mathbb{U} } E( p_{a,b}, \hat{p}_{a,b} ) + \Theta(U, V, W)
+\end{align}
+In the above function, $E()$ denote a loss function that measures the prediction error. In this paper we use the indicator function as loss function, which is commonly used for classification problems. $p_{i,j}$ is the label of a training instance $(u_a, u_b)$ while $ \hat{p_{a,b}}$ is the predicted result using the proposed model. Finally, $\Theta(U, V, W)$ is the regularization term, defined as:
+\begin{align}
+\Theta(U, V, W) = \frac{\lambda_u}{2} \| U \|_2^2 + \frac{\lambda_v}{2} \| V \|_2^2 + \frac{\lambda_W}{2} \| W \|_2^2
+\end{align}
+The regularization term is in place to prevent the model from over-fitting. The regularization coefficients $\lambda_u$, $\lambda_v$, and $\lambda_w$ are selected through a cross-validation process in our experiments.
