@@ -6,8 +6,12 @@ In this section, we report the preliminary experiment results of the proposed me
 
 We evaluate the proposed model on the widely-used Foursquare check-in dataset~\cite{yang2015nationtelescope}. In our experiments, we mine the check-in data from two of the most popular cities, including New York City (NYC) and Tokyo. The dataset contains about 227,428 check-ins reported in NYC and 573,703 in Tokyo. The check-ins were collected for about 10 month. From each check-in, we extract the user ID, location ID, and a timestamp. Using the user ID or location ID, we retrieve the profile of that user or location on Foursquare. The user profile include the social connection between users (``follower - followee") and the location profile includes its category (\textit{Food, Coffee, Nightlife, Fun, and Shopping}), coordinates, and user rating. The check-ins are grouped by user ID/location ID and sorted by their timestamps.
 
-
-Select most active users...Ground truth...etc.
+For our experiments, we select a subset of users that satisfy the following conditions:
+\begin{itemize}
+\item \textbf{Check-in Active} Actively report check-ins on a daily basis.
+\item \textbf{Socially Active} The user have followers and/or also follows others.
+\end{itemize}
+These two conditions are in place to filter out the users who do not have enough data or lack the ground truth to test the proposed model. To ease the user selection process, we applied community detection~\cite{fortunato2010community} and selected two communities, each contains approximately 150 users who satisfy both conditions, from the two cities. Each user have on average 19 social connections. We show in the following subsections that this small set of users is sufficient to demonstrate the effectiveness of the proposed model.
 
 \subsection{Experiment Design}
 
@@ -15,10 +19,12 @@ For comparison purpose, we have implemented the following schemes:
 \begin{itemize}
 \item \textbf{Random} This scheme randomly assigns a user pair as friends or non-friends, each with a probability of 50\%.
 
-\item \textbf{Naive} This scheme simple counts the number of co-visitations of two users. If the number is higher than a threshold, the two users are predicted to be friends, and otherwise non-friends. The threshold is set to be the average number of co-visitations of each pair of friends in the dataset we used.
+\item \textbf{Naive} This scheme simple counts the number of co-visitations of two users. If the number is higher than a threshold, the two users are predicted to be friends, and otherwise non-friends. The threshold is set to be the average number of co-visitations of each pair of friends among the selected users.
 
-\item \textbf{Proposed} The proposed model that assumes co-visitations occurred at different locations and time slots have different predictive power.
+\item \textbf{Proposed} The proposed co-visitation matrix-based model.
 \end{itemize}
+
+
 
 \subsection{Results}
 

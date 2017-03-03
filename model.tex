@@ -6,6 +6,17 @@ Given the trajectories of two users $C_{u_a}$ and $C_{u_b}$, their spatio-tempor
 
 The granularity of locations and time slots used to build the co-visitation matrix can be adjusted as needed, i.e., each location can be an exact PoI or a geographic region with arbitrary size. The time slot can be hours or days. The purpose of this mechanism is to provide the users with the flexibility to control the number of model parameters need to be learnt from training data. For larger dataset, more locations and time slots can be used. However, if the number of labelled instance is limited, using a large number of parameters may risk over-fitting the model. Without loss of generality, in this paper, we use the following granularity settings. 1) Each location is a specific PoI (i.e., a restaurant, a coffee shop, etc.), but the total number of PoIs used is limited to 100. 2) We partition each day into 5 time slots:(12:00am to 6:00am), (6:01am to 10:00am), (10:01am to 2:00pm), (2:01pm to 5:00pm), (5:01pm to 8:00pm), and (8:01pm to 11:59pm). Note that these time slot are not evenly partitioned. Instead, we choose this typical time slot that reflects different period of a day for work or social events. As such, we use a total of 35 time slots, because each day of a week has 5 slots.
 
+\myparatight{Efficient co-visitation detection} The co-visitations of two given users can be detected by exhaustive searching, i.e., for each check-in of a user $u_a$, exams every check-in of $u_b$ to see if they formulate a co-visitation. This is obviously inefficient especially when the number of user are large in generating the training instances. Here we design a more efficient co-visitation detection algorithm. We describe the algorithm step by step:
+\begin{itemize}[leftmargin=*]
+\item \textbf{1)} Each check-in $c = (u_, l, t)$ is converted into two tuples $c_s = (u, l, t- \frac{\tau}{2})$ and $c_e = (u, l, t+\frac{\tau}{2})$. As such, each check-in is extended to a time period $[t - \frac{\tau}{2}, t + \frac{\tau}{2}]$. Two check-ins to the same location $l$ is a co-visitation if and only if their time period overlaps.
+\item \textbf{2)} All tuples are sorted by the timestampe in ascending order.
+\item \textbf{3)} For each possible co-visitation location, initialize an empty list. Initialize the co-visitation matrix to be all zeros.
+\item \textbf{4)} The algorithm then performs a running count by scanning through the sorted tuples one by one.
+\item \textbf{4.i)} When $c_s$ is encountered for some check-in $c$, it is is added to the list of location $l$. If $l$ is not empty, a co-visitation is detected. Update the co-visitation matrix accordingly.
+\item \textbf{4.ii)} When $c_e$ is encountered for some check-in $c$, remove $c_s$ of the same check-in from the list of location $l$.
+\end{itemize} 
+Note that the above algorithm has log-linear complexity to the total number of check-ins. More importantly, it is able to detect co-visitation for a set of users in a parallel manner. Thus it is much faster than exhaustive search, whose complexity is quartic to the number of check-ins for each pair of users.
+
 \subsection{Social Connection Prediction Model}
 
 In our model, both locations and time slots are mapped into a 1-dimensional latent space. We use $U \in \mathbb{R}^m$ and $V \in \mathbb{R}^m$ to denote the latent variables for locations and time slots, where $u_i \in U$ can be seen as a weight that measures the significance of the $i$-th locations. Similarly, $v_j \in V$ measures the significance of the $j$-th time slot. Given the co-visitation matrix $M(a,b)$, we can then estimate that how likely $u_a$ and $u_b$ are socially connected using a weighted sum over the matrix, defined as follows:
@@ -20,7 +31,7 @@ If the predicted probability is higher than a decision threshold, denoted by $\l
 
 The above model, however, does not take into consideration the factor of geographic distance between locations. The same location may have different significance for users lives in different area. The geographic distance between a user's home/work and the co-visitation locations can been seen as a personalized parameter to adjust the significance of a location. To this end, we modify Equation~\ref{sum} by adding the \textit{distance coefficients} $W = \{w_1, w_2\}$ to our model:
 \begin{align}\label{sum2}
-s(a,b) = \sum_{i = 1} ^m \sum_{j=1}^n \bigg( u_i v_j + \sqrt{w_1 D(i,a) * w_2 D(i,b)} \bigg) M(a,b)_{i,j} 
+s(a,b) = \sum_{i = 1} ^m \sum_{j=1}^n \bigg( u_i v_j + w_1 D(i,a) + w_2 D(i,b) \bigg) M(a,b)_{i,j} 
 \end{align}
 Here, $w_1$ and $w_2$ are the two distance coefficients, and $D(i,a)$ measures the geographic distance between the $i$-th locations and $u_a$'s home base. For simplicity, we use the geographic center of $u_a$'s all check-ins as the estimated home base coordinate. Nevertheless, more complex method such as the one proposed in~\cite{cho2011friendship} can also be used for more strict estimation. Note that by introducing the distance coefficients we only added two more parameters into our model, but it allows the classification results to be ``personalized" to some extend by involving the two user's home base locations into the model.
 
@@ -29,10 +40,12 @@ Here, $w_1$ and $w_2$ are the two distance coefficients, and $D(i,a)$ measures t
 
 Parameters in Equation~\ref{sum2} can be learned from a set of labelled training data by optimization the solving the function:
 \begin{align}\label{opt}
-\argmin_{U, V, W} \sum_{ \forall u_a, u_b \in \mathbb{U} } E( p_{a,b}, \hat{p}_{a,b} ) + \Theta(U, V, W)
+\argmin_{U, V, W} \sum_{ \forall u_a, u_b \in \mathbb{U} } E( p_{a,b}, \hat{p}_{a,b} ) + \Theta(U, V)
 \end{align}
-In the above function, $E()$ denote a loss function that measures the prediction error. In this paper we use the indicator function as loss function, which is commonly used for classification problems. $p_{i,j}$ is the label of a training instance $(u_a, u_b)$ while $ \hat{p_{a,b}}$ is the predicted result using the proposed model. Finally, $\Theta(U, V, W)$ is the regularization term, defined as:
+In the above function, $E()$ denote a loss function that measures the prediction error. In this paper we use the indicator function as loss function, which is commonly used for classification problems. $p_{i,j}$ is the label of a training instance $(u_a, u_b)$ while $ \hat{p_{a,b}}$ is the predicted result using the proposed model. Finally, $\Theta(U, V)$ is the regularization term, defined as:
 \begin{align}
-\Theta(U, V, W) = \frac{\lambda_u}{2} \| U \|_2^2 + \frac{\lambda_v}{2} \| V \|_2^2 + \frac{\lambda_W}{2} \| W \|_2^2
+\Theta(U, V) = \frac{\lambda_u}{2} \| U \|_2^2 + \frac{\lambda_v}{2} \| V \|_2^2
 \end{align}
-The regularization term is in place to prevent the model from over-fitting. The regularization coefficients $\lambda_u$, $\lambda_v$, and $\lambda_w$ are selected through a cross-validation process in our experiments.
+The regularization term is in place to prevent the model from over-fitting. The regularization coefficients $\lambda_u$ and $\lambda_v$ are selected through a cross-validation process in our experiments.
+
+Note that in the co-visitation matrix, we assigned a latent variable to each location and each time slot. As a result, it may appears a total number of $m+n+2$ parameters need to be learnt from the training data. However, the actual number of parameters can be much smaller. This is because the the co-visitation matrix is usually highly sparse. If the two users have never reported a co-visitation to certain location $l$, then the corresponding latent variable does not need to be learnt. The value of the varible is simply set to 0. Similarly, the latent variable for a time slot is set to 0 if no co-visitations occurred within the time slot. Eventually, only those locations and time slots that are significant will have a non-zero latent variable value. This makes the model parameters easily interpretable by human.

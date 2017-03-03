@@ -1,10 +1,6 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: mainfile.aux
 The style file: ACM-Reference-Format.bst
 Database file #1: ref.bib
-Repeated entry---line 119 of file ref.bib
- : @inproceedings{xiao2010finding
- :                               ,
-I'm skipping whatever remains of this entry
 Warning--empty publisher in backstrom2011supervised
 Warning--empty address in backstrom2011supervised
 Warning--empty publisher in cho2011friendship
@@ -34,4 +30,4 @@ Warning--empty publisher in yin2010linkrec
 Warning--empty address in yin2010linkrec
 Warning--empty publisher in yu2006stochastic
 Warning--empty address in yu2006stochastic
-(There was 1 error message)
+(There were 29 warnings)

@@ -63,6 +63,16 @@
 \newblock
 
 
+\bibitem[\protect\citeauthoryear{Fortunato}{Fortunato}{2010}]%
+        {fortunato2010community}
+\bibfield{author}{\bibinfo{person}{Santo Fortunato}.}
+  \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Community detection in graphs}.
+\newblock \bibinfo{journal}{{\em Physics reports\/}} \bibinfo{volume}{486},
+  \bibinfo{number}{3} (\bibinfo{year}{2010}), \bibinfo{pages}{75--174}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Gao, Tang, and Liu}{Gao et~al\mbox{.}}{2012}]%
         {gao2012mobile}
 \bibfield{author}{\bibinfo{person}{Huiji Gao}, \bibinfo{person}{Jiliang Tang},
