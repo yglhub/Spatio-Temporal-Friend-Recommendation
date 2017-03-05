@@ -2,16 +2,67 @@
 
 In this section, we report the preliminary experiment results of the proposed methodology on the trajectory of a selected subset of Foursquare users.
 
+%\caption{Mutual social connection prediction results}\label{T1}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table*}[]
+\centering
+\caption{Mutual social connection prediction results}
+\label{T1}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{City}  & \multirow{2}{*}{Scheme} & \multicolumn{2}{c|}{$\tau$=15min} & \multicolumn{2}{c|}{$\tau$=30min} & \multicolumn{2}{c|}{$\tau$=45min} & \multicolumn{2}{c|}{$\tau$=60min} \\ \cline{3-10} 
+                       &                         & Accuracy      & F1-Score     & Accuracy      & F1-Score     & Accuracy      & F1-Score     & Accuracy      & F1-Score     \\ \hline
+\multirow{5}{*}{NYC}   & Random                  & 0.1170        & 0.1532       & 0.1170        & 0.1532       & 0.1170        & 0.1532       & 0.1170        & 0.1532       \\ \cline{2-10} 
+                       & Count                   & 0.2012        & 0.1885       & 0.2012        & 0.1885       & 0.2012        & 0.1885       & 0.2012        & 0.1885       \\ \cline{2-10} 
+                       & Matrix Factorization    & 0.2315        & 0.3105       & 0.2315        & 0.3105       & 0.2315        & 0.3105       & 0.2315        & 0.3105       \\ \cline{2-10} 
+                       & Co-visitation           & 0.2220        & 0.2517       & 0.3539        & 0.4112       & 0.3450        & 0.3981       & 0.3421        & 0.4001       \\ \cline{2-10} 
+                       & Co-visitation+Distance  & 0.2279        & 0.2783       & 0.3718        & 0.4541       & 0.3665        & 0.4017       & 0.3657        & 0.4023       \\ \hline
+\multirow{5}{*}{Tokyo} & Random                  & 0.1008        & 0.1279       & 0.1008        & 0.1279       & 0.1008        & 0.1279       & 0.1008        & 0.1279       \\ \cline{2-10} 
+                       & Count                   & 0.1759        & 0.2020       & 0.1759        & 0.2020       & 0.1759        & 0.2020       & 0.1759        & 0.2020       \\ \cline{2-10} 
+                       & Matrix Factorization    & 0.2507        & 0.3017       & 0.2507        & 0.3017       & 0.2507        & 0.3017       & 0.2507        & 0.3017       \\ \cline{2-10} 
+                       & Co-visitation           & 0.2724        & 0.3210       & 0.2562        & 0.3401       & 0.2490        & 0.3114       & 0.2220        & 0.2680       \\ \cline{2-10} 
+                       & Co-visitation+Distance  & 0.2850        & 0.2626       & 0.2717        & 0.3312       & 0.2529        & 0.3210       & 0.2177        & 0.2725       \\ \hline
+\end{tabular}
+\end{table*}
+
+
+
+\begin{table*}[]
+\centering
+\caption{One-way social connection prediction results}
+\label{T2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{City}  & \multirow{2}{*}{Scheme} & \multicolumn{2}{c|}{$\tau$=15min} & \multicolumn{2}{c|}{$\tau$=30min} & \multicolumn{2}{c|}{$\tau$=45min} & \multicolumn{2}{c|}{$\tau$=60min} \\ \cline{3-10} 
+                       &                         & Accuracy      & F1-Score     & Accuracy      & F1-Score     & Accuracy      & F1-Score     & Accuracy      & F1-Score     \\ \hline
+\multirow{5}{*}{NYC}   & Random                  & 0.1202        & 0.1497       & 0.1202        & 0.1497       & 0.1202        & 0.1497       & 0.1202        & 0.1497       \\ \cline{2-10} 
+                       & Count                   & 0.1978        & 0.1933       & 0.1978        & 0.1933       & 0.1978        & 0.1933       & 0.1978        & 0.1933       \\ \cline{2-10} 
+                       & Matrix Factorization    & 0.2057        & 0.2525       & 0.2057        & 0.2525       & 0.2057        & 0.2525       & 0.2057        & 0.2525       \\ \cline{2-10} 
+                       & Co-visitation           & 0.2019        & 0.2601       & 0.2133        & 0.2850       & 0.2127        & 0.2854       & 0.2039        & 0.2821       \\ \cline{2-10} 
+                       & Co-visitation+Distance  & 0.2107        & 0.2885       & 0.2279        & 0.2927       & 0.2285        & 0.2931       & 0.2047        & 0.2814       \\ \hline
+\multirow{5}{*}{Tokyo} & Random                  & 0.1115        & 0.1220       & 0.1115        & 0.1220       & 0.1115        & 0.1220       & 0.1115        & 0.1220       \\ \cline{2-10} 
+                       & Count                   & 0.1503        & 0.1772       & 0.1503        & 0.1772       & 0.1503        & 0.1772       & 0.1503        & 0.1772       \\ \cline{2-10} 
+                       & Matrix Factorization    & 0.1957        & 0.2239       & 0.1957        & 0.2239       & 0.1957        & 0.2239       & 0.1957        & 0.2239       \\ \cline{2-10} 
+                       & Co-visitation           & 0.2121        & 0.2530       & 0.2195        & 0.2685       & 0.2009        & 0.2512       & 0.1961        & 0.2127       \\ \cline{2-10} 
+                       & Co-visitation+Distance  & 0.2177        & 0.2509       & 0.2201        & 0.2710       & 0.2029        & 0.2527       & 0.1959        & 0.2245       \\ \hline
+\end{tabular}
+\end{table*}
+
+
+
+
 \subsection{Dataset Description}
 
 We evaluate the proposed model on the widely-used Foursquare check-in dataset~\cite{yang2015nationtelescope}. In our experiments, we mine the check-in data from two of the most popular cities, including New York City (NYC) and Tokyo. The dataset contains about 227,428 check-ins reported in NYC and 573,703 in Tokyo. The check-ins were collected for about 10 month. From each check-in, we extract the user ID, location ID, and a timestamp. Using the user ID or location ID, we retrieve the profile of that user or location on Foursquare. The user profile include the social connection between users (``follower - followee") and the location profile includes its category (\textit{Food, Coffee, Nightlife, Fun, and Shopping}), coordinates, and user rating. The check-ins are grouped by user ID/location ID and sorted by their timestamps.
 
 For our experiments, we select a subset of users that satisfy the following conditions:
 \begin{itemize}
-\item \textbf{Check-in Active} Actively report check-ins on a daily basis.
-\item \textbf{Socially Active} The user have followers and/or also follows others.
+\item \textbf{Check-in Active} Actively report check-ins for a time period of at least 1 month. The average number of check-ins reported per day is no less than 1.
+\item \textbf{Socially Active} The user have followers and also follows others.
 \end{itemize}
-These two conditions are in place to filter out the users who do not have enough data or lack the ground truth to test the proposed model. To ease the user selection process, we applied community detection~\cite{fortunato2010community} and selected two communities, each contains approximately 150 users who satisfy both conditions, from the two cities. Each user have on average 19 social connections. We show in the following subsections that this small set of users is sufficient to demonstrate the effectiveness of the proposed model.
+These two conditions are in place to filter out the users who do not have enough data or lack the ground truth to test the proposed model. In the user selection process, we applied community detection algorithm~\cite{fortunato2010community} among most active users from the two cities and selected two communities for our experiments. Each community contains approximately 170 users from the same city who satisfy both conditions. The two communities have no overlap. Each user have on average 14 social connections. The total number of locations visited by these users is approximately 350 but not all the locations have been co-visited by friends. We show in the following subsections that this small set of users is sufficient to demonstrate the effectiveness of the proposed model.
 
 \subsection{Experiment Design}
 
@@ -19,12 +70,21 @@ For comparison purpose, we have implemented the following schemes:
 \begin{itemize}
 \item \textbf{Random} This scheme randomly assigns a user pair as friends or non-friends, each with a probability of 50\%.
 
-\item \textbf{Naive} This scheme simple counts the number of co-visitations of two users. If the number is higher than a threshold, the two users are predicted to be friends, and otherwise non-friends. The threshold is set to be the average number of co-visitations of each pair of friends among the selected users.
+\item \textbf{Count} This scheme simple counts the number of co-visitations of two users. If the number is higher than a threshold, the two users are predicted to be friends, and otherwise non-friends. The threshold is set to be the average number of co-visitations of each pair of friends among the selected users.
 
-\item \textbf{Proposed} The proposed co-visitation matrix-based model.
+\item \textbf{Matrix Factorization} We implement the standard Matrix Factorization~\cite{koren2009matrix} algorithm. Each user is represented by a latent vector of size $l$, and whether two users are friends is predicted by the product of their latent vectors. The latent vectors are learnt with a user-user rating matrix, which is a $n \times n$ matrix $M$ where $n$ is the number of users. if $u_i$ is a friend of $u_j$ then $M_{i,j}$ is set to 1 otherwise 0. Readers are referred to~\cite{koren2009matrix} for details about the learning process. In our experiment, we set $l = 5$.
+
+\item \textbf{Co-visitation} The proposed co-visitation matrix-based model using Equation~\ref{sum}. This model does not take into consideration the geographic distance factor.
+
+\item \textbf{Co-visitation + Distance} The proposed co-visitation matrix-based model using Equation~\ref{sum2}, which involves the geographic distance factor.
 \end{itemize}
 
-
+We consider two types of prediction tasks: \textit{Predicting one-way social connections} and \textit{predicting mutual social connection}. Recall that for one-way social connections, the class of $(u_a, u_b)$ may be different from $(u_b, u_a)$ while for mutual social connections the they must be the same. The social connections on Foursquare are originally one-way. A user $u_a$ can choose to follow another user $u_b$ but meanwhile $u_b$ may not a follower of $u_a$. Nevertheless, we can extra a subset of mutually connected users, i.e., a pair of users who follows each other, as training/testing set for mutual social connection prediction.
 
 \subsection{Results}
 
+We use three popular evaluation metrics, \textit{Recall}, \textit{Accuracy}, and \textit{F1-score}. We adjust the co-visitation time window $\tau$ from 10 mins to 60 mins and show its impact on the three metrics. For each experiment run, we do a 3-fold cross-validation and report the average performance. The result of mutual social connection prediction is showed in Table~\ref{T1} and that of one-way social connection prediction is showed in Table~\ref{T2}.
+
+The proposed techniques demonstrates clear advantage in all experiments over the naive count-based and random scheme. It also outperforms Matrix Factorization based scheme in most setting. Our techniques have the best performance given that an appropriate $\tau$ value is selected. In our experiments, when $\tau$ is either too small or too large, it will cause the performance to drop.
+
+In general, our experiments confirms that users social connections are, to some extend, reflected by the occurrence of co-visitations. It is possible to predict some social connections with spatio-temporal data, but not all of them. We observed that there exist users who have never co-visited any location with some of his friends. Nevertheless, this may simply due to the fact that his friends did not report every check-in. 

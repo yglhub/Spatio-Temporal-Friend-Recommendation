@@ -99,6 +99,19 @@
 \newblock
 
 
+\bibitem[\protect\citeauthoryear{Koren, Bell, Volinsky, et~al\mbox{.}}{Koren
+  et~al\mbox{.}}{2009}]%
+        {koren2009matrix}
+\bibfield{author}{\bibinfo{person}{Yehuda Koren}, \bibinfo{person}{Robert
+  Bell}, \bibinfo{person}{Chris Volinsky}, {and} \bibinfo{person}{others}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Matrix factorization techniques for recommender
+  systems}.
+\newblock \bibinfo{journal}{{\em Computer\/}} \bibinfo{volume}{42},
+  \bibinfo{number}{8} (\bibinfo{year}{2009}), \bibinfo{pages}{30--37}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Lian, Zheng, and Xie}{Lian
   et~al\mbox{.}}{2013}]%
         {lian2013collaborative}
