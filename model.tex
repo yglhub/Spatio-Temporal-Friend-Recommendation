@@ -8,26 +8,26 @@ The granularity of locations and time slots used to build the co-visitation matr
 
 \myparatight{Efficient co-visitation detection} The co-visitations of two given users can be detected by exhaustive searching, i.e., for each check-in of a user $u_a$, exams every check-in of $u_b$ to see if they formulate a co-visitation. This is obviously inefficient especially when the number of user are large in generating the training instances. Here we design a more efficient co-visitation detection algorithm. We describe the algorithm step by step:
 \begin{itemize}[leftmargin=*]
-\item \textbf{1)} Each check-in $c = (u_, l, t)$ is converted into two tuples $c_s = (u, l, t- \frac{\tau}{2})$ and $c_e = (u, l, t+\frac{\tau}{2})$, where $\tau$ is the co-visitation time window. As such, the time of each check-in is seen as a time period $[t - \frac{\tau}{2}, t + \frac{\tau}{2}]$. Two check-ins to the same location $l$ is a co-visitation if and only if their time period overlaps.
+\item \textbf{1)} Each check-in $c = (u_, l, t)$ is converted into two tuples $c_s = (u, l, t- \frac{\tau}{2})$ and $c_e = (u, l, t+\frac{\tau}{2})$, where $\tau$ is the co-visitation time window. As such, the time of each check-in is seen as a time period $[t - \frac{\tau}{2}, t + \frac{\tau}{2}]$. Two check-ins to the same location $l$ is a co-visitation if and only if their time periods overlap.
 \item \textbf{2)} All tuples are sorted by the timestampe in ascending order.
 \item \textbf{3)} For each possible co-visitation location, initialize an empty list. Initialize the co-visitation matrix to be all zeros.
 \item \textbf{4)} The algorithm then performs a running count by scanning through the sorted tuples one by one.
 \item \textbf{4.i)} When $c_s$ is encountered for some check-in $c$, it is is added to the list of location $l$. If $l$ is not empty, a co-visitation is detected. Update the co-visitation matrix accordingly.
 \item \textbf{4.ii)} When $c_e$ is encountered for some check-in $c$, remove $c_s$ of the same check-in from the list of location $l$.
 \end{itemize} 
-Note that the above algorithm has log-linear complexity to the total number of check-ins. More importantly, it is able to detect co-visitation for a set of users in a parallel manner. Thus it is much faster than exhaustive search, whose complexity is quartic to the number of check-ins for each pair of users.
+Note that the above algorithm has log-linear complexity to the total number of check-ins. More importantly, it is able to detect co-visitation for a set of users in a parallel manner. Thus it is much faster than exhaustive search, whose complexity is square to the number of check-ins for each pair of users. And the total number of user pairs is also square to the number of users, meaning that the overall complexity of exhaustive search can be quartic to the number of users.
 
 
 
 \subsection{Social Connection Prediction Model}
 
-In our model, both locations and time slots are mapped into a 1-dimensional latent space. We use $U \in \mathbb{R}^m$ and $V \in \mathbb{R}^m$ to denote the latent variables for locations and time slots, where $u_i \in U$ can be seen as a weight that measures the significance of the $i$-th locations. Similarly, $v_j \in V$ measures the significance of the $j$-th time slot. Given the co-visitation matrix $M(a,b)$, we can then estimate that how likely $u_a$ and $u_b$ are socially connected using a weighted sum over the matrix, defined as follows:
+In our model, both locations and time slots are mapped into a 1-dimensional latent space. We use $U \in \mathbb{R}^m$ and $V \in \mathbb{R}^n$ to denote the latent variables for locations and time slots, where $u_i \in U$ can be seen as a weight that measures the significance of the $i$-th locations. Similarly, $v_j \in V$ measures the significance of the $j$-th time slot. Given the co-visitation matrix $M(a,b)$, we can then estimate that how likely $u_a$ and $u_b$ are socially connected using a weighted sum over the matrix, defined as follows:
 \begin{align}\label{sum}
 s(a,b) = \sum_{i = 1} ^m \sum_{j=1}^n u_i v_j M(a,b)_{i,j}
 \end{align}
-where $s(a,b)$ can be seen as a ``score". The higher the score is, the more likely $u_a$ and $u_b$ are socially connected. We employ the sigmoid function to convert $c(a,b)$ into an estimated probability for the classification problem:
+where $s(a,b)$ can be seen as a ``score". The higher the score is, the more likely $u_a$ and $u_b$ are socially connected. We employ the sigmoid function to convert $s(a,b)$ into an estimated probability for the classification problem:
 \begin{align}\label{sigmoid}
-\hat{Pr}( (u_a, u_b)  \text{ is connected} ) = \frac{1}{1 + e^{-c(a,b)}}
+\hat{Pr}( (u_a, u_b)  \text{ is connected} ) = \frac{1}{1 + e^{-s(a,b)}}
 \end{align}
 If the predicted probability is higher than a decision threshold, denoted by $\lambda$, the user pair is classified as \textit{connected}, otherwise \textit{non-connected}.
 
@@ -40,14 +40,14 @@ Here, $w_1$ and $w_2$ are the two distance coefficients, and $D(i,a)$ measures t
 
 \subsection{Model Learning}
 
-Parameters in Equation~\ref{sum2} can be learned from a set of labelled training data by optimization the solving the function:
+Parameters in Equation~\ref{sum2} can be learned from a set of labelled training data by optimization the following function:
 \begin{align}\label{opt}
 \argmin_{U, V, W} \sum_{ \forall u_a, u_b \in \mathbb{U} } E( p_{a,b}, \hat{p}_{a,b} ) + \Theta(U, V)
 \end{align}
-In the above function, $E()$ denote a loss function that measures the prediction error. In this paper we use the indicator function as loss function, which is commonly used for classification problems. $p_{i,j}$ is the label of a training instance $(u_a, u_b)$ while $ \hat{p_{a,b}}$ is the predicted result using the proposed model. Finally, $\Theta(U, V)$ is the regularization term, defined as:
+In the above function, $E()$ denotes a loss function that measures the prediction error. In this paper we use the indicator function as loss function, which is commonly used for classification problems. $p_{i,j}$ is the label of a training instance $(u_a, u_b)$ while $ \hat{p_{a,b}}$ is the predicted result using the proposed model. Finally, $\Theta(U, V)$ is the regularization term, defined as:
 \begin{align}
 \Theta(U, V) = \frac{\lambda_u}{2} \| U \|_2^2 + \frac{\lambda_v}{2} \| V \|_2^2
 \end{align}
-The regularization term is in place to prevent the model from over-fitting. The regularization coefficients $\lambda_u$ and $\lambda_v$ are selected through a cross-validation process in our experiments.
+The regularization term is in place to prevent the model from over-fitting. The regularization coefficients $\lambda_u$ and $\lambda_v$ are selected through a cross-validation process in our experiments. Note that since $W$ contains only two parameters, no regularization term is introduced for it in the learning process.
 
-Note that in the co-visitation matrix, we assigned a latent variable to each location and each time slot. As a result, it may appears a total number of $m+n+2$ parameters need to be learnt from the training data. However, the actual number of parameters can be much smaller. This is because the the co-visitation matrix is usually highly sparse. If the two users have never reported a co-visitation to certain location $l$, then the corresponding latent variable does not need to be learnt. The value of the varible is simply set to 0. Similarly, the latent variable for a time slot is set to 0 if no co-visitations occurred within the time slot. Eventually, only those locations and time slots that are significant will have a non-zero latent variable value. This makes the model parameters easily interpretable by human.
+Note that in the co-visitation matrix, we assigned a latent variable to each location and each time slot. As a result, it may appear that a total number of $m+n+2$ parameters need to be learnt from the training data. However, the actual number of parameters can be much smaller. This is because the the co-visitation matrix is usually highly sparse. If the two users have never reported a co-visitation to certain location $l$, then the corresponding latent variable does not need to be learnt. The value of the varible is simply set to 0. Similarly, the latent variable for a time slot is set to 0 if no co-visitations occurred within the time slot. Eventually, only those locations and time slots that are significant will have a non-zero latent variable value. This makes the model parameters easily interpretable by human.

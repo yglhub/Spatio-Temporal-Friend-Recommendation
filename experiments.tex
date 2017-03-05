@@ -2,10 +2,7 @@
 
 In this section, we report the preliminary experiment results of the proposed methodology on the trajectory of a selected subset of Foursquare users.
 
-%\caption{Mutual social connection prediction results}\label{T1}
 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
 \begin{table*}[]
 \centering
 \caption{Mutual social connection prediction results}
@@ -55,9 +52,9 @@ In this section, we report the preliminary experiment results of the proposed me
 
 \subsection{Dataset Description}
 
-We evaluate the proposed model on the widely-used Foursquare check-in dataset~\cite{yang2015nationtelescope}. In our experiments, we mine the check-in data from two of the most popular cities, including New York City (NYC) and Tokyo. The dataset contains about 227,428 check-ins reported in NYC and 573,703 in Tokyo. The check-ins were collected for about 10 month. From each check-in, we extract the user ID, location ID, and a timestamp. Using the user ID or location ID, we retrieve the profile of that user or location on Foursquare. The user profile include the social connection between users (``follower - followee") and the location profile includes its category (\textit{Food, Coffee, Nightlife, Fun, and Shopping}), coordinates, and user rating. The check-ins are grouped by user ID/location ID and sorted by their timestamps.
+We evaluate the proposed model on the widely-used Foursquare check-in dataset~\cite{yang2015nationtelescope}. In our experiments, we mine the check-in data from two of the most popular cities, including New York City (NYC), USA and Tokyo, Japan. The dataset contains about 227,428 check-ins reported in NYC and 573,703 in Tokyo. The check-ins were collected for about 10 month. From each check-in, we extract the user ID, location ID, and a timestamp. Using the user ID or location ID, we retrieve the profile of that user or location on Foursquare. The user profile include the social connection between users (``follower - followee") and the location profile includes its category (\textit{Food, Coffee, Nightlife, Fun, and Shopping}), coordinates, and user rating. The check-ins are grouped by user ID/location ID and sorted by their timestamps.
 
-For our experiments, we select a subset of users that satisfy the following conditions:
+For our experiments, we select a subset of users that satisfy the following two conditions:
 \begin{itemize}
 \item \textbf{Check-in Active} Actively report check-ins for a time period of at least 1 month. The average number of check-ins reported per day is no less than 1.
 \item \textbf{Socially Active} The user have followers and also follows others.
@@ -79,12 +76,12 @@ For comparison purpose, we have implemented the following schemes:
 \item \textbf{Co-visitation + Distance} The proposed co-visitation matrix-based model using Equation~\ref{sum2}, which involves the geographic distance factor.
 \end{itemize}
 
-We consider two types of prediction tasks: \textit{Predicting one-way social connections} and \textit{predicting mutual social connection}. Recall that for one-way social connections, the class of $(u_a, u_b)$ may be different from $(u_b, u_a)$ while for mutual social connections the they must be the same. The social connections on Foursquare are originally one-way. A user $u_a$ can choose to follow another user $u_b$ but meanwhile $u_b$ may not a follower of $u_a$. Nevertheless, we can extra a subset of mutually connected users, i.e., a pair of users who follows each other, as training/testing set for mutual social connection prediction.
+We consider two types of prediction tasks: \textit{Predicting one-way social connections} and \textit{predicting mutual social connection}. Recall that for one-way social connections, the class of $(u_a, u_b)$ may be different from $(u_b, u_a)$ while for mutual social connections, their class must be the same. The social connections on Foursquare are originally one-way. A user $u_a$ can choose to follow another user $u_b$ but meanwhile $u_b$ may not be a follower of $u_a$. Nevertheless, we can extract a subset of mutually connected users, i.e., users who follow each other mutually, as training/testing set for mutual social connection prediction task.
 
 \subsection{Results}
 
-We use three popular evaluation metrics, \textit{Recall}, \textit{Accuracy}, and \textit{F1-score}. We adjust the co-visitation time window $\tau$ from 10 mins to 60 mins and show its impact on the three metrics. For each experiment run, we do a 3-fold cross-validation and report the average performance. The result of mutual social connection prediction is showed in Table~\ref{T1} and that of one-way social connection prediction is showed in Table~\ref{T2}.
+We use two popular evaluation metrics for binary classification, \textit{Accuracy} and \textit{F1-score}. We adjust the co-visitation time window $\tau$ from 15 mins to 60 mins and show its impact on these metrics. For each experiment run, we do a 3-fold cross-validation on the dataset and report the average performance. The result of mutual social connection prediction is showed in Table~\ref{T1} and that of one-way social connection prediction is showed in Table~\ref{T2}.
 
-The proposed techniques demonstrates clear advantage in all experiments over the naive count-based and random scheme. It also outperforms Matrix Factorization based scheme in most setting. Our techniques have the best performance given that an appropriate $\tau$ value is selected. In our experiments, when $\tau$ is either too small or too large, it will cause the performance to drop.
+The proposed techniques demonstrate clear advantage in all experiments over the naive count-based and random scheme. It also outperforms Matrix Factorization based scheme in most setting. To summarize, our techniques have the best performance given that an appropriate $\tau$ value is selected to accurately capture co-visitations. In our experiments, when $\tau$ is either too small or too large, it will cause the performance to drop.
 
-In general, our experiments confirms that users social connections are, to some extend, reflected by the occurrence of co-visitations. It is possible to predict some social connections with spatio-temporal data, but not all of them. We observed that there exist users who have never co-visited any location with some of his friends. Nevertheless, this may simply due to the fact that his friends did not report every check-in. 
+In general, our experiments confirms that users social connections are, to some extend, reflected by the occurrence of co-visitations. We find it is possible to predict some social connections with spatio-temporal data, but not all of them. We observed that there exist users who have never co-visited any location with some of his friends. Nevertheless, this may be simply due to the fact that his friends did not report every check-in.
